@@ -240,7 +240,7 @@ class API(object):
     def _flush(self, payload):
         try:
             response = self._put(self._traces, payload.get_payload(), payload.length)
-        except (httplib.HTTPException, OSError, IOError) as e:
+        except Exception as e:
             return e
 
         # the API endpoint is not available so we should downgrade the connection and re-try the call
