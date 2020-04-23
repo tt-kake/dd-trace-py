@@ -285,3 +285,13 @@ def test_api_container_info(get_container_info):
     api = API(_HOST, 8126)
     assert api._container_info is None
     assert 'Datadog-Container-Id' not in api._headers
+
+
+def test_bad_headers():
+    # Regression test: bad headers should not cause _flush to raise.
+    payload = mock.Mock()
+    payload.get_payload.return_value = "foobar"
+    payload.length = 12
+    api = API("localhost", 8126, headers={"X-Invalid-Header": None})
+    response = api._flush(payload)
+    assert response.status == 200
