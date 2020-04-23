@@ -294,4 +294,4 @@ def test_bad_headers():
     payload.length = 12
     api = API("localhost", 8126, headers={"X-Invalid-Header": None})
     response = api._flush(payload)
-    assert isinstance(response, TypeError)
+    assert isinstance(response, Exception)
